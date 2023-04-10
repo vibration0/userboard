@@ -12,12 +12,12 @@
                 <li><a th:href="@{/}">Home</a></li>
                 <li><a th:href="@{/hello}">About</a></li>
                 <li><a href="#">Contact</a></li>
+                
             </ul>
         </nav>
     </header>
-		
     <div layout:fragment="content">
-    <div layout:replace="hello :: body"></div>
+    <div layout:include="hello"></div>
     </div>
 
     <footer>
