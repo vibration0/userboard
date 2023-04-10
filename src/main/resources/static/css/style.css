@@ -1,0 +1,30 @@
+@charset "UTF-8";
+
+*{
+	margin: 0;
+	padding: 0;
+}
+
+.login-menu{
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 30px;
+ }
+.menu-top a{
+	margin-right: 30px;
+}
+.menu{
+	display: flex;
+	justify-content: center;
+}
+.menu-center a{
+	margin: 30px;
+}
+main{
+	display:flex;
+	width: auto;
+	height: 800px;
+	justify-content: center;
+	
+}
+

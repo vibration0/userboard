@@ -14,9 +14,4 @@ public class HomeController {
 		return "home";
 	}
 	
-	@GetMapping("/hello")
-	public String hello(Model model) {
-		model.addAttribute("title","hello");
-		return "hello";
-	}
 }
