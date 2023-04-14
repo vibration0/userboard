@@ -1,8 +1,7 @@
 @charset "UTF-8";
 
-*{
-	margin: 0;
-	padding: 0;
+html{
+		height: 100%;
 }
 
 .login-menu{
@@ -16,15 +15,18 @@
 .menu{
 	display: flex;
 	justify-content: center;
+	margin-bottom: 50px;
 }
 .menu-center a{
-	margin: 30px;
+	margin: 40px; 
+	
 }
 main{
-	display:flex;
-	width: auto;
+	display:inline-block;
+	width: 1200px;
 	height: 800px;
-	justify-content: center;
-	
+
+	box-sizing: border-box;
+	margin: 10px;
 }
 

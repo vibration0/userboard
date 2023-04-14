@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+ xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+ layout:decorate="layouts/default">
+<head>
+<meta charset="UTF-8">
+<title>회원가입</title>
+ <script src="//code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
+<script>
+	function openDaumPostcode(){
+		 
+		new daum.Postcode({
+			oncomplete:function(data){
+				document.getElementById('zipcode').value=data.zonecode;
+				document.getElementById('addr').value=data.address;
+	 		}
+			
+		}).open();
+	}//openDaumPostcode()---
+	
+	//Ajax
+	function IdCheck(){
+		var id = $('#id').val();
+		if (id === ''){
+			error[0].innerHTML = '아이디를 입력해주세요';
+			error[0].style.color = "red";
+			return false
+		}
+			$.ajax({
+				type:"POST",
+				url:"checkId.do",
+				data:"id="+$('#id').val(),
+				dataType:'JSON',
+				success:function(data){
+					//console.log('1');
+					if(data.check==1){
+						error[0].innerHTML = "사용가능한 ID";
+						$('#pwsd1').focus();
+					} else if(data.check==-1){
+						error[0].innerHTML = "사용중인 ID"
+						error[0].style.color ="red";
+							$('#id').val('').focus();
+							return false
+						}	
+					}
+			})
+		}
+	
+	function checkNickName(){
+		var nick = $('#nick').val();
+		if(nick=== ''){
+			error[4].innerHTML = "닉네임을 입력해주세요";
+			error[4].style.color="red";
+			return false;
+		}
+		$.ajax({
+			type:"POST",
+			url:"checkNick.do",
+			data:"NickName="+nick,
+			dataType:"JSON",
+			success:function(data){
+				
+				if(data.nickcheck== 1){
+					console.log(data);
+					error[4].innerHTML = "사용가능한 닉네임";	
+					error[4].style.display ="block";
+					$('#yy').focus();
+				} else if(data.nickcheck== -1){
+					error[4].innerHTML = "사용중인 닉네임";
+					error[4].style.display = "block";
+					error[4].style.color = "red";
+					console.log(data);
+					$('#nick').val('').focus();
+					return false;
+				}
+			}
+		})
+	}
+  </script>
+
+
+  
+</head>
+<body>
+	<div layout:fragment="content">
+		<form name="userForm" method="post" action="/insertPro.do">
+		<div id="header">
+			<div id="wrapper">
+			
+				<div id="content">
+				<!-- ID -->
+					<div>
+						<h3>
+							<label for="id">아이디</label>
+						</h3>
+						<span class="box int_id">
+							<input type="text" id="id" name="UserId" class="int" maxlength="20">
+							<span class="step_url">@vibration.com</span>
+							<input type="button" value="중복체크" onClick="IdCheck()">
+						</span>
+						<span class="error_next_box"></span>
+					</div>
+					
+					<!-- PW1 -->
+					<div>
+						<h3 class="join_title"><label for="pswd1">비밀번호</label></h3>
+						<span class="box int_pass">
+							<input type="password" id="pswd1" class="int" maxlength="20">
+							<span id="alertTxt"></span>
+							<img src="/imgs/m_icon_pass.png" id="pswd1_img1" class="pswdImg">
+						</span>
+						<span class="error_next_box"></span>
+					</div>
+					
+					<!-- PW2 -->
+					<div>
+						<h3 class="join_title"><label for="pswd2">비밀번호 확인</label></h3>
+						<span class="box int_pass_check">
+							<input type="password" id="pswd2" name="PassWord" class="int" maxlength="20">
+							<img src="/imgs/m_icon_check_disable.png" id="pswd2_Img1" class="pswdImg">
+						</span>
+						<span class="error_next_box"></span>
+					</div>
+					
+					<!-- NAME -->
+					<div>
+						<h3 class="join_title"><label for="name">이름</label></h3>
+							<span class="box int_name">
+								<input type="text" id="name" name="Name" class="int" maxlength="20">
+							</span>
+							<span class="error_next_box"></span>
+					</div>
+					
+					<!-- NICK NAME -->
+					<div>
+						<h3 class="join_title"><label for="nick">닉네임</label></h3>
+						<span class="box int_nickname">
+							<input type="text" id="nick" name="NickName" class="int" maxlength="20">
+						</span>
+						<input type="button" value="중복체크" onclick="checkNickName()">
+						<span class="error_next_box"></span>
+					</div>
+					
+					<!-- BIRTH DAY -->
+					<div>
+						<h3 class="join_title"><label for="yy">생년월일</label></h3>
+						
+						<!-- BIRTH YY -->
+						<div id="bir_yy">
+							<span class="box">
+								<input type="text" id="yy" class="int" maxlength="4" placeholder="년(4자)">
+							</span>
+						</div>
+							
+						<!-- BIRTH MM -->
+						<div id="bir_mm">
+							<span class="box">
+								<select	id="mm" class="sel">
+									<option>월</option>
+									<option value="01">1</option>
+									<option value="02">2</option>
+									<option value="03">3</option>
+									<option value="04">4</option>
+									<option value="05">5</option>
+									<option value="06">6</option>
+									<option value="07">7</option>
+									<option value="08">8</option>
+									<option value="09">9</option>
+									<option value="10">10</option>
+									<option value="11">11</option>
+									<option value="12">12</option>
+								</select>
+							</span>
+						</div>
+						<!-- BIRTH_DD -->
+						<div id=bir_dd>
+							<span class="box">
+								<input type="text" id="dd" class="int" maxlength="2" placeholder="일">
+							</span>
+						</div>
+					</div>
+					<span class="error_next_box"></span>
+				</div>
+				<!-- EMAIL -->
+				<div>
+					<h3 class="join_title"><label for="Email">Email</label></h3>
+					<span class="box int_email">
+						<input type="text" id="email" name="EmailAddr" class="int" maxlength="100" placeholder="이메일 입력">
+					</span>
+					<span class="error_next_box">이메일 주소를 다시 확인해주세요.</span>
+				</div>
+				
+				<!-- MOBILE -->
+				<div>
+					<h3 class="join_title"><label for="phoneNo">휴대전화</label></h3>
+					<span class="box_int_mobile">
+						<input type="tel" id="mobile" name="PhoneNum" class="int" maxlength="16" placeholder="전화번호 입력">
+					</span>
+				</div>
+				<span class="error_next_box"></span>
+				<!-- ZIP CODE -->
+				<div>
+					<h3 class="join_title"><label for="zipcode">우편번호</label></h3>
+						<span>
+							<input type="text" id="zipcode" class="int">
+							<input type="button" value="주소찾기" class="btn_area" onClick='openDaumPostcode()'>
+						</span>
+				</div>
+				
+				<!-- ADDRESS -->
+				<div>
+					<h3 class="join_title"><label for="addr">주소</label></h3>
+						<span>
+							<input type="text" id="addr" name="Addr1" class="int">
+						</span>
+				</div>
+				<!-- ADDRESS2 -->
+				<div>
+					<h3><label for="addr2">상세주소</label></h3>
+						<span>
+							<input type="text" id="addr2" name="Addr2" class="int"> 
+						</span>
+				</div>
+				<span class="error_next_box"></span>
+				<!-- SUBMIT -->
+				<div class="btn_area">
+					<button type="submit" id="btnjoin" onClick="return submitCheck()">
+						<span>가입하기</span>
+					</button>
+				</div>
+			</div>
+			<!-- content -->
+			<script type="text/javascript" th:src="@{/script/main.js}"></script>
+		</div>
+			
+		</form>
+	</div>
+	
+</body>
+</html>
