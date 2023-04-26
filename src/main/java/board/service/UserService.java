@@ -9,6 +9,8 @@ public interface UserService {
 	public UserDto selectNick(String NickName) throws Exception;
 	
 	public void insertUser(UserDto users) throws Exception;
+	
+	public void updateUser(UserDto users) throws Exception;
 
 	
 	

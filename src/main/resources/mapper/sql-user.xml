@@ -21,9 +21,9 @@
 		
 	<insert id="insertUser" parameterType="board.dto.UserDto">
 		INSERT	INTO USERS
-		(UserId,PassWord,Name,NickName,PhoneNum,EmailAddr,Addr)
+		(UserId,PassWord,Name,NickName,PhoneNum,EmailAddr,Addr,FulAddr)
 		VALUES
-		(#{UserId},#{PassWord},#{Name},#{NickName},#{PhoneNum},#{EmailAddr},#{Addr})
+		(#{UserId},#{PassWord},#{Name},#{NickName},#{PhoneNum},#{EmailAddr},#{Addr},#{FulAddr})
 	</insert>
 
 </mapper>

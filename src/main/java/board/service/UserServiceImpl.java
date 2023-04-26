@@ -27,6 +27,11 @@ public class UserServiceImpl implements UserService {
 		
 		return usermapper.selectNick(NickName);
 	}
+
+	public void updateUser(UserDto users) throws Exception {
+		
+		usermapper.updateUser(users);
+	}
 	
 	
 

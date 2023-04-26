@@ -13,6 +13,8 @@ public interface UserMapper {
 	
 	public void insertUser(UserDto users) throws Exception;
 	
-	
+//	public void updateUser(UserDto users) throws Exception;
+
+	public void updateUser(UserDto users) throws Exception;
 	
 }

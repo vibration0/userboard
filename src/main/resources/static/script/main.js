@@ -90,12 +90,10 @@ function checkPw() {
 		if(pw1.value === "") {
 				Errorbox(error[1],"필수 정보입니다.");
 		} else if(!pwPattern.test(pw1.value)) {
-			error[1].innerHTML = "8~16자 영문 대 소문자, 숫자, 특수문자를 사용하세요.";
+			Errorbox(error[1],"8~16자 영문 대 소문자, 숫자, 특수문자를 사용하세요.");
 			pwMsg.innerHTML = "사용불가";
 			pwMsg.style.color = "red";
 			pwMsgArea.style.paddingRight = "93px";
-			error[1].style.display = "block";
-			error[1].style.color = "#08A600";
 			pw1.value = "";
 			pwMsg.style.display = "block";
 			pwImg1.src = "/imgs/m_icon_not_use.png"
@@ -104,7 +102,6 @@ function checkPw() {
 			pwMsg.innerHTML = "안전";
 			pwMsg.style.color ="blue";
 			pwMsg.style.display = "block";
-			pwMsg.style.color = "#03c75a";
 			pwMsg.src = "/imgs/m_icon_safe.png";
 		}
 	}
@@ -112,13 +109,11 @@ function checkPw() {
 function comparePw() {
 		if(pw2.value === pw1.value && pw2.value !="") {
 			pwImg2.src = "/imgs/m_icon_check_enable.png";
-			error[2].style.display = "block";
-			error[2].style.color = "#08A600";
+			Errorbox(error[2],"")
 		} else if(pw2.value !== pw1.value) {
 			pwImg2.src = "/imgs/m_icon_check_disable.png";
-			error[2].innerHTML = "비밀번호가 일치하지 않습니다.";
-			error[2].style.display = "block";
-			error[2].style.color = "#08A600";
+			Errorbox(error[2],"비밀번호가 일치하지 않습니다.");
+			error[2].style.color ="red";
 			pw2.value="";
 		}
 }
@@ -126,14 +121,10 @@ function comparePw() {
 function checkName() {
 	
 	if(userName.value==="") {
-		error[3].innerHTML = "필수 정보입니다.";
-		error[3].style.display ="block";
-		error[3].style.color = "#08A600";
+		Errorbox(error[3],"필수 정보입니다.");
 		userName.value = "";
 	} else if(!namePattern.test(userName.value)|| userName.value.indexOf(" ")> -1) {
-		error[3].innerHTML = "한글과 영문 대 소문자를 사용하세요. (특수기호, 공백 사용 불가)";
-		error[3].style.display = "block";
-		error[3].style.color = "#08A600";
+		Errorbox(error[3],"한글과 영문 대 소문자를 사용하세요. (특수기호, 공백 사용 불가)");
 		userName.value = "";
 	} else {
 		error[3].style.display = "none";
@@ -143,14 +134,10 @@ function checkName() {
 function checkNick() {
 
 	if(nickName.value ==='') {
-		error[4].innerHTML = "필수 정보입니다";
-		error[4].style.display ="block";
-		error[4].style.color = "#08A600";
+		Errorbox(error[4],"필수 정보입니다");
 		nickName.value = "";
 	} else if(!nickPattern.test(nickName.value)||nickName.value.indexOf(" ")>-1) {
-		error[4].innerHTML = "한글과 영문 대 소문자를 사용하세요.(특수기호, 공백사용불가)";
-		error[4].style.display ="block";
-		error[4].style.color = "#08A600";
+		Errorbox(error[4],"한글과 영문 대 소문자를 사용하세요.(특수기호, 공백사용불가)");
 		nickName.value = "";
 	} else {
 		error[4].style.display = "none";
@@ -161,9 +148,7 @@ function isBirthCompleted() {
 
 	
 	if(!yearPattern.test(yy.value)){
-		error[5].innerHTML = "태어난 년도 4자리를 정확하게 입력하세요.";
-		error[5].style.display = "block";
-		error[5].style.color = "#08A600";
+		Errorbox(error[5],"태어난 년도 4자리를 정확하게 입력하세요.");
 		yy.value = "";
 	} else {
 		isMonthSelected();
@@ -171,8 +156,7 @@ function isBirthCompleted() {
 	
 	function isMonthSelected() {
 		if(mm.value === "월") {
-			error[5].innerHTML = "태어난 월을 선택하세요";
-			error[5].style.color = "#08A600";
+			Errorbox(error[5],"태어난 월을 선택하세요");
 			mm.value == "월";
 		} else {
 			isDateCompleted();
@@ -181,8 +165,7 @@ function isBirthCompleted() {
 	
 	function isDateCompleted() {
 		if(dd.value === "") {
-			error[5].innerHTML = "태어난 일(날짜) 2자리를 정확하게 입력하세요.";
-			error[5].style.color = "#08A600";
+			Errorbox(error[5],"태어난 일(날짜) 2자리를 정확하게 입력하세요.");
 		} else {
 			isBirthRight();
 		}
@@ -192,8 +175,7 @@ function isBirthCompleted() {
 	function isBirthRight() {
 		var datePattern = /\d{1,2}/;
 		if(!datePattern.test(dd.value)||Number(dd.value)<1 ||Number(dd.value)>31){
-			error[5].innerHTML = "생년월일을 다시 확인해주세요.";
-			error[5].style.color = "#08A600";
+			Errorbox(error[5],"생년월일을 다시 확인해주세요.");
 			dd.value= "";
 		} else {
 			checkAge();
@@ -202,17 +184,11 @@ function isBirthCompleted() {
 	
 	function checkAge() {
 		if(Number(yy.value)< 1920) {
-			error[5].innerHTML = "정말이세요?";
-			error[5].style.display ="block";
-			error[5].style.color = "#08A600";
+			Error(error[5],"정말이세요?");
 		} else if(Number(yy.value)>2023) {
-			error[5].innerHTML = "미래에서 오셨네요";
-			error[5].style.display = "block";
-			error[5].style.color = "#08A600";
+			Errorbox(error[5],"미래에서 오셨네요");
 		} else if(Number(yy.value)>2008) {
-			error[5].innerHTML = "만 14세 미만의 어린이는 보호자 동의가 필요합니다.";
-			error[5].style.display = "block";
-			error[5].style.color = "#08A600";
+			Errorbox(error[5],"만 14세 미만의 어린이는 보호자 동의가 필요합니다.");
 		} else {
 			error[5].style.display = "none";
 		}
@@ -222,11 +198,9 @@ function isBirthCompleted() {
 		
 		
 		if(email.value ===""){
-			error[6].innerHTML = "이메일을 입력해주세요";
-			error[6].style.display = "block";
-			error[6].style.color = "#08A600";
+			Errorbox(error[6],"이메일을 입력해주세요");
 		} else if(!emailPattern.test(email.value)){
-			error[6].style.display = "block";
+			Errorbox(error[6],"정확한 이메일을 입력해주세요");
 			email.value="";
 		} else {
 			error[6].style.display = "none";
@@ -237,13 +211,9 @@ function isBirthCompleted() {
 	 
 	 
 	 if(mobile.value === "") {
-		 error[7].innerHTML = "휴대폰 번호를 입력해주세요";
-		 error[7].style.display = "block";
-		 error[7].style.color = "#08A600";
+		 Errorbox(error[7],"휴대폰 번호를 입력해주세요");
 	 } else if(!isPhoneNum.test(mobile.value)) {
-		 error[7].innerHTML ="형식에 맞지 않는 번호입니다.";
-		 error[7].style.display = "block";
-		 error[7].style.color = "#08A600";
+		 Errorbox(error[7],"형식에 맞지 않는 번호입니다.");
 		 mobile.value ="";
 	 } else {
 		 error[7].style.display ="none";
@@ -252,13 +222,9 @@ function isBirthCompleted() {
 	function checkAddr() {
 		
 		if(addr.value==="") {
-			error[8].innerHTML = "상세주소를 입력해주세요";
-			error[8].style.color = "#08A600";
-			error[8].style.display = "block";
+			Errorbox(error[8],"상세주소를 입력해주세요");
 		} else if(!addrPattern.test(addr.value)) {
-			error[8].innerHTML = "한글로 입력해주세요";
-			error[8].style.display = "block";
-			error[8].style.color = "#08A600";
+			Errorbox(error[8],"한글로 입력해주세요");
 			addr.value="";
 			
 		} 

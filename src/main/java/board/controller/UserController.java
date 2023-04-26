@@ -1,27 +1,23 @@
 package board.controller;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import board.dto.UserDto;
 import board.service.UserService;
-
-import java.util.HashMap;
-import java.util.Map;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 @Controller
 public class UserController {
@@ -45,7 +41,7 @@ public class UserController {
 	}
 	
 	//id중복체크, 내정보수정
-	@RequestMapping(value="checkId.do", method=RequestMethod.POST, produces = "application/json")
+	@RequestMapping(value="checkId.do", method=RequestMethod.POST)
 	@ResponseBody
 	public Map<String, Object> idCheck(@RequestParam String id) throws Exception {
 	 Map<String, Object> resultMap = new HashMap<String,Object>();
@@ -60,7 +56,8 @@ public class UserController {
     return resultMap;
 	}
 	
-	@RequestMapping(value="checkNick.do", method=RequestMethod.POST, produces = "application/json")
+	//닉네임 확인
+	@RequestMapping(value="checkNick.do", method=RequestMethod.POST)
 	@ResponseBody
 	public Map<String,Object> nickCehck(@RequestParam String NickName) throws Exception {
 		Map<String,Object> resultMap = new HashMap<String,Object>();
@@ -78,13 +75,8 @@ public class UserController {
 	
 	//회원가입 & 비밀번호 암호화
 	@RequestMapping(value="/insertPro.do", method=RequestMethod.POST)
-	public String userinsertPro(HttpServletRequest request, UserDto user ) throws Exception
+	public String userinsertPro(HttpServletRequest request, UserDto user) throws Exception
 	{
-		String Addr=request.getParameter("Addr1");
-		String Addr2=request.getParameter("Addr2");
-		Addr=Addr+Addr2;
-		user.setAddr(Addr);
-		
 		
 		BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 		String encodedPassword = passwordEncoder.encode(user.getPassWord());
@@ -93,6 +85,17 @@ public class UserController {
 		userservice.insertUser(user);
 		return "redirect:/";
 	}
+	
+	@RequestMapping(value="updateUserForm.do",method=RequestMethod.POST)
+	public String updateUser(String id,Model model) throws Exception {
+		
+		UserDto user=userservice.selectUser(id);
+		
+		model.addAttribute("user",user);
+		
+		return "/users/updateUser";
+	}
+	
 	
 	
 }

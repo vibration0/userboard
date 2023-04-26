@@ -13,6 +13,7 @@ public class UserDto {
 	private String PhoneNum;
 	private String EmailAddr;
 	private String Addr;
+	private String FulAddr;
 	private Timestamp CreatedAt;
 	private Timestamp UpdatedAt;
 	private Timestamp DeletedAt;

@@ -22,17 +22,20 @@ public class DatabaseConfiguration {
 	//SqlSessionFactory 설정 
 			@Bean
 			public SqlSessionFactory sqlSessionFactory(DataSource dataSource) throws Exception{
+				
 				SqlSessionFactoryBean sqlsessionFactoryBean=new SqlSessionFactoryBean();
 				sqlsessionFactoryBean.setDataSource(dataSource);
-				sqlsessionFactoryBean.setMapperLocations(applicationContext.getResources("classpath:/mapper/**/sql-*.xml"));
+				sqlsessionFactoryBean.setMapperLocations
+				(applicationContext.getResources("classpath:/mapper/**/sql-*.xml"));
 				return sqlsessionFactoryBean.getObject();
 		}
 			
 			 @Bean
 			 public SqlSessionTemplate sqlSessionTemplate(SqlSessionFactory sqlSessionFactory) {
-			   return new SqlSessionTemplate(sqlSessionFactory);
+			 
+			 return new SqlSessionTemplate(sqlSessionFactory);
 		}
-			    
+			 
 			 @Bean
 			 @ConfigurationProperties(prefix="mybatis.configuration")
 			 public org.apache.ibatis.session.Configuration mybatisConfig() {
@@ -41,7 +44,7 @@ public class DatabaseConfiguration {
 			 
 			 @Bean
 			 public BCryptPasswordEncoder passwordEncoder() {
-			 return new BCryptPasswordEncoder();
+			  return new BCryptPasswordEncoder();
 		}
 			
 }
