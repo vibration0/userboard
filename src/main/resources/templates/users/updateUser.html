@@ -5,9 +5,53 @@
 	<head>
 		<meta charset="UTF-8">
 		<title>Insert title here</title>
+		<script type="text/javascript">
+		function openDaumPostcode(){
+			 
+			new daum.Postcode({
+				oncomplete:function(data){
+					document.getElementById('zipcode').value=data.zonecode;
+					document.getElementById('addr').value=data.address;
+		 		}
+				
+			}).open();
+		}//openDaumPostcode()---
+		
+		function checkNickName(){
+			var nick = $('#nick').val();
+			if(nick=== ''){
+				error[4].innerHTML = "닉네임을 입력해주세요";
+				error[4].style.color="red";
+				return false;
+			}
+			$.ajax({
+				type:"POST",
+				url:"checkNick.do",
+				data:"NickName="+nick,
+				dataType:"JSON",
+				success:function(data){
+					
+					if(data.nickcheck== 1){
+						console.log(data);
+						error[4].innerHTML = "사용가능한 닉네임";	
+						error[4].style.display ="block";
+						$('#yy').focus();
+					} else if(data.nickcheck== -1){
+						error[4].innerHTML = "사용중인 닉네임";
+						error[4].style.display = "block";
+						error[4].style.color = "red";
+						console.log(data);
+						$('#nick').val('').focus();
+						return false;
+					}
+				}
+			})
+		}
+		</script>
 	</head>
 	<body>
 		<div layout:fragment="content">
+			<form name="userUpdateForm" method="post" action="/updatePro.do">
 			<div id="header">
 				<div id="wrapper">
 					
@@ -29,9 +73,81 @@
 									<span>비밀번호 변경</span>
 								</button>
 						</div>
+						<!-- NAME -->
+						<div>
+							<h3 class="join_title"><label for="name">이름</label></h3>
+								<span class="box int_name">
+									<input type="text" id="name" name="Name" class="int" maxlength="20" value="[[${Name}]]">
+								</span>
+								<span class="error_nextbox"></span>
+						</div>
+						
+						<!-- NICK NAME -->
+						<div>
+							<h3 class="join_title"><label for="nick">닉네임</label></h3>
+							<span class="box int_nickname">
+								<input type="text" id="nick" name="NickName" class="int" maxlength="20" value="[[${NickName}]]">
+							</span>
+							<input type="button" value="중복체크" onClick="checkNickName()">
+							<span class="error_next_box"></span>
+						</div>
+						
+						<!-- EMAIL -->
+						<div>
+							<h3 class="join_title"><label for="Email">Email</label></h3>
+							<span class="box int_email">
+								<input type="text" id="email" name="EmailAddr" class="int" maxlength="100"
+								placeholder="이메일 입력" value="[[${EmailAddr}]]"> 
+							</span>
+							<span class="error_next_box">이메일 주소를 다시 확인해주세요.</span>
+						</div>
+						
+						<!-- MOBILE -->
+						<div>
+							<h3 class="join_title"><label for="phoneNo">휴대전화</label></h3>
+							<span class="box int_mobile">
+								<input type="tel" id="mobile" name="PhoneNum" class="int" maxlength="16"
+								 placeholder="전화번호 입력" value="[[${PhoneNum}]]">
+							</span>
+							<span class="error_next_box"></span>
+						</div>
+						
+						<!-- ZIPCODE -->
+						<div>
+							<h3 class="join_title"><label for="zipcode">우편번호</label></h3>
+								<span>
+									<input type="text" id="zipcode" class="int">
+									<input type="button" value="주소찾기" class="btn_area" onClick="openDaumPostcode()">				
+								</span>
+						</div>
+						
+						<!-- ADDRESS -->
+						<div>
+							<h3 class="join_title"><label for="addr">주소</label></h3>
+								<span>
+									<input type="text" id="addr" name="Addr" class="int" value="[[${Addr}]]">
+								</span>
+						</div>
+						<!-- ADDRESS2 -->
+						<div>
+							<h3 class="join_title"><label for="addr2">상세주소</label></h3>
+								<span>
+									<input type="text" id="addr2" name="FulAddr" class="int" value="[[${FulAddr}]]">
+								</span>
+						</div>
+						<span class="error_next_box"></span>
+						
+						<!-- SUBMIT -->
+						<div class="btn_area">
+							<button type="submit" id="btnjoin" onClick="return submitCheck()">
+								<span>수정하기</span>
+							</button>
+						</div>
 					</div>
 				</div>
+				<script th:src="@{/script/main.js}"></script>
 			</div>
+			</form>
 		</div>
 	</body>	
 </html>

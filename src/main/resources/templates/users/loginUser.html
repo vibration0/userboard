@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+ xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+ layout:decorate="layouts/default">
+<head>
+	<meta charset="UTF-8">
+	<title>Insert title here</title>
+</head>
+<body>
+
+	<div layout:fragment="content">
+	
+	<form name="login" method="post" action="/loginPro.do" >
+		<div th:if="${msg != null}">
+		<div style="color: red;">
+			<span th:text="${msg}"></span>
+		</div>
+	</div>
+		<div class="container">
+			<div class=wrapper>
+				<div>
+				<h3><label>ID</label></h3>
+				<span>
+					<input type="text" id="id" name="UserId" maxlength="20">
+				</span>
+				</div>
+				
+				<div>
+					<h3><label>PW</label></h3>
+					<span>
+						<input type="password" id="pw" name="PassWord" maxlength="100">
+					</span>
+				</div>
+				
+				<div>
+					<button type="submit" id="btnjoin">
+						<span>로그인</span>
+					</button>
+				</div>
+			</div>
+		</div>
+	</form>
+	</div>
+</body>
+</html>

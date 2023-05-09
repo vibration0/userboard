@@ -1,5 +1,7 @@
 package board.service;
 
+import java.util.*;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import board.mapper.UserMapper;
@@ -31,6 +33,12 @@ public class UserServiceImpl implements UserService {
 	public void updateUser(UserDto users) throws Exception {
 		
 		usermapper.updateUser(users);
+	}
+
+	
+	public UserDto loginUser(Map map) throws Exception {
+		
+		return usermapper.loginUser(map);
 	}
 	
 	

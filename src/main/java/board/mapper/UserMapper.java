@@ -1,7 +1,7 @@
 package board.mapper;
 
 import org.apache.ibatis.annotations.Mapper;
-
+import java.util.*;
 import board.dto.UserDto;
 
 @Mapper
@@ -16,5 +16,7 @@ public interface UserMapper {
 //	public void updateUser(UserDto users) throws Exception;
 
 	public void updateUser(UserDto users) throws Exception;
+	
+	public UserDto loginUser(Map map) throws Exception;
 	
 }

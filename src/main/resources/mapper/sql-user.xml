@@ -25,5 +25,10 @@
 		VALUES
 		(#{UserId},#{PassWord},#{Name},#{NickName},#{PhoneNum},#{EmailAddr},#{Addr},#{FulAddr})
 	</insert>
+	
+	<select id="loginUser" parameterType="java.util.Map" resultType="board.dto.UserDto">
+	SELECT * from users
+	where UserId=#{UserId}
+	</select>
 
 </mapper>

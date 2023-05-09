@@ -24,9 +24,9 @@ public class UserController {
 	
 	@Autowired
 	private UserService userservice;
-	
 	@Autowired
 	private BCryptPasswordEncoder passwordEncoder;
+	
 	//메인 화면
 	@RequestMapping("/")
 	public String home(Model model) {
@@ -35,12 +35,12 @@ public class UserController {
 		return "home";
 	}
 	//회원가입 창
-	@RequestMapping("userinsert.do")
+	@RequestMapping("userinsert.do")	
 	public String userinsert(Model model) {
 		return "/users/userinsert";
 	}
 	
-	//id중복체크, 내정보수정
+	//id중복체크
 	@RequestMapping(value="checkId.do", method=RequestMethod.POST)
 	@ResponseBody
 	public Map<String, Object> idCheck(@RequestParam String id) throws Exception {
@@ -86,6 +86,56 @@ public class UserController {
 		return "redirect:/";
 	}
 	
+	//로그인 폼
+	@RequestMapping("loginForm.do")
+	public String loginForm() {
+		
+		return "/users/loginUser";
+	}
+	
+	@RequestMapping(value="loginPro.do", method=RequestMethod.POST)
+	public String loginDetail(Model model,HttpServletRequest request) throws Exception {
+		
+		
+		String UserId = request.getParameter("UserId");
+		String PassWord =request.getParameter("PassWord");
+		HashMap<String,String> map=new HashMap<String,String>();
+		map.put("UserId", UserId);
+		map.put("PassWord", PassWord);
+		System.out.println(map);
+		
+		UserDto user=userservice.loginUser(map);
+		System.out.println(user);
+		
+		if(user == null) {
+			model.addAttribute("msg","존재하지 않는 ID입니다.");
+			return "users/loginUser";
+		} else {
+		BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+		String encodedPassWord = user.getPassWord();
+		boolean matchPw=passwordEncoder.matches(PassWord, encodedPassWord);
+		
+		if(!matchPw) {
+			model.addAttribute("msg","비밀번호가 일치하지 않습니다.");
+			return "users/loginUser";
+			}
+		}
+		
+		
+		HttpSession loginSession=request.getSession();
+		
+		loginSession.setAttribute("id", user.getUserId());
+		model.addAttribute("id", user.getUserId());
+		  
+		return "redirect:/";
+	}
+	
+	@RequestMapping("logOut.do")
+	public String logOut(HttpSession session) {
+		session.invalidate();
+		return "redirect:/";
+	}
+	//회원가입 수정폼
 	@RequestMapping(value="updateUserForm.do",method=RequestMethod.POST)
 	public String updateUser(String id,Model model) throws Exception {
 		
