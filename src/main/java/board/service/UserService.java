@@ -14,7 +14,7 @@ public interface UserService {
 	//회원가입
 	public void insertUser(UserDto users) throws Exception;
 	
-	//회원정보수정
+	//회원정보 DB수정
 	public void updateUser(UserDto users) throws Exception;
 	
 	//로그인

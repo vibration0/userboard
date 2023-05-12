@@ -86,13 +86,13 @@ public class UserController {
 		return "redirect:/";
 	}
 	
-	//로그인 폼
+	//로그인 창
 	@RequestMapping("loginForm.do")
 	public String loginForm() {
 		
 		return "/users/loginUser";
 	}
-	
+	//로그인 기능
 	@RequestMapping(value="loginPro.do", method=RequestMethod.POST)
 	public String loginDetail(Model model,HttpServletRequest request) throws Exception {
 		
@@ -125,27 +125,38 @@ public class UserController {
 		HttpSession loginSession=request.getSession();
 		
 		loginSession.setAttribute("id", user.getUserId());
-		model.addAttribute("id", user.getUserId());
+		/* model.addAttribute("id", user.getUserId()); */
 		  
 		return "redirect:/";
 	}
 	
+	//로그아웃 기능
 	@RequestMapping("logOut.do")
 	public String logOut(HttpSession session) {
 		session.invalidate();
 		return "redirect:/";
 	}
+	
 	//회원가입 수정폼
-	@RequestMapping(value="updateUserForm.do",method=RequestMethod.POST)
-	public String updateUser(String id,Model model) throws Exception {
+	@RequestMapping(value="updateUserForm.do")
+	public String updateUser(@RequestParam("UserId")String UserId, Model model,HttpServletRequest request) throws Exception {
 		
-		UserDto user=userservice.selectUser(id);
+		UserDto user=userservice.selectUser(UserId);
 		
 		model.addAttribute("user",user);
 		
-		return "/users/updateUser";
+		return "users/updateUser";
 	}
 	
-	
-	
+	@RequestMapping(value="updateUserPro.do", method=RequestMethod.POST)
+	public String updatePro(UserDto user, HttpServletRequest reqeust) throws Exception {
+		
+		userservice.updateUser(user);
+		return "redirect:/";
+	}
+	//비밀번호 수정 창
+	@RequestMapping("editPassWordform.do")
+	public String PassWordform() {
+		return "";
+	}
 }

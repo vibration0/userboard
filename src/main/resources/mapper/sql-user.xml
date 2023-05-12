@@ -6,7 +6,7 @@
 	<select id="selectUser" resultType="board.dto.UserDto">
 		SELECT 
 			UserId,PassWord,Name,NickName,
-			PhoneNum,EmailAddr,Addr,CreatedAt,
+			PhoneNum,EmailAddr,Addr,FulAddr,CreatedAt,
 			UpdatedAt from users
 			WHERE UserId=#{UserId}
 	</select>
@@ -30,5 +30,14 @@
 	SELECT * from users
 	where UserId=#{UserId}
 	</select>
-
+	
+	<update id="updateUser" parameterType="board.dto.UserDto">
+	UPDATE users
+	 set Name=#{Name},NickName=#{NickName},PhoneNum=#{PhoneNum},
+	 EmailAddr=#{EmailAddr},Addr=#{Addr},FulAddr=#{FulAddr},UpdatedAt=NOW()
+	WHERE UserId=#{UserId}
+	</update>
+	
+	
+	
 </mapper>

@@ -5,6 +5,8 @@
 	<head>
 		<meta charset="UTF-8">
 		<title>Insert title here</title>
+		 <script src="//code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
 		<script type="text/javascript">
 		function openDaumPostcode(){
 			 
@@ -20,8 +22,8 @@
 		function checkNickName(){
 			var nick = $('#nick').val();
 			if(nick=== ''){
-				error[4].innerHTML = "닉네임을 입력해주세요";
-				error[4].style.color="red";
+				error[1].innerHTML = "닉네임을 입력해주세요";
+				error[1].style.color="red";
 				return false;
 			}
 			$.ajax({
@@ -33,13 +35,14 @@
 					
 					if(data.nickcheck== 1){
 						console.log(data);
-						error[4].innerHTML = "사용가능한 닉네임";	
-						error[4].style.display ="block";
-						$('#yy').focus();
+						error[1].innerHTML = "사용가능한 닉네임";	
+						error[1].style.display ="block";
+						error[1].style.color = "royalblue";
+						$('#email').focus();
 					} else if(data.nickcheck== -1){
-						error[4].innerHTML = "사용중인 닉네임";
-						error[4].style.display = "block";
-						error[4].style.color = "red";
+						error[1].innerHTML = "사용중인 닉네임";
+						error[1].style.display = "block";
+						error[1].style.color = "red";
 						console.log(data);
 						$('#nick').val('').focus();
 						return false;
@@ -51,10 +54,9 @@
 	</head>
 	<body>
 		<div layout:fragment="content">
-			<form name="userUpdateForm" method="post" action="/updatePro.do">
+			<form name="userUpdateForm" method="post" action="/updateUserPro.do" th:object="${user}">
 			<div id="header">
 				<div id="wrapper">
-					
 					<div id="content">
 						<!-- ID -->
 							<div>
@@ -62,7 +64,7 @@
 									<label for="id">아이디</label>
 								</h3>
 								<span class="box int_id">
-									<input type="text" id="id" name="UserId" class="int" maxlength="20" value="[[${UserId}]]" readonly>
+									<input type="text" id="id" name="UserId" class="int" maxlength="20" th:value="*{UserId}" readonly>
 								</span>
 							</div>
 							
@@ -73,22 +75,23 @@
 									<span>비밀번호 변경</span>
 								</button>
 						</div>
+						
 						<!-- NAME -->
 						<div>
 							<h3 class="join_title"><label for="name">이름</label></h3>
 								<span class="box int_name">
-									<input type="text" id="name" name="Name" class="int" maxlength="20" value="[[${Name}]]">
+									<input type="text" id="name" name="Name" class="int" maxlength="20" th:value="*{Name}">
 								</span>
-								<span class="error_nextbox"></span>
+								<span class="error_next_box"></span>
 						</div>
 						
 						<!-- NICK NAME -->
 						<div>
 							<h3 class="join_title"><label for="nick">닉네임</label></h3>
 							<span class="box int_nickname">
-								<input type="text" id="nick" name="NickName" class="int" maxlength="20" value="[[${NickName}]]">
+								<input type="text" id="nick" name="NickName" class="int" maxlength="20" th:value="*{NickName}">
 							</span>
-							<input type="button" value="중복체크" onClick="checkNickName()">
+							<input type="button" value="중복체크" onClick='checkNickName()'>
 							<span class="error_next_box"></span>
 						</div>
 						
@@ -97,9 +100,9 @@
 							<h3 class="join_title"><label for="Email">Email</label></h3>
 							<span class="box int_email">
 								<input type="text" id="email" name="EmailAddr" class="int" maxlength="100"
-								placeholder="이메일 입력" value="[[${EmailAddr}]]"> 
+								placeholder="이메일 입력" th:value="*{EmailAddr}"> 
 							</span>
-							<span class="error_next_box">이메일 주소를 다시 확인해주세요.</span>
+							<span class="error_next_box"></span>
 						</div>
 						
 						<!-- MOBILE -->
@@ -107,7 +110,7 @@
 							<h3 class="join_title"><label for="phoneNo">휴대전화</label></h3>
 							<span class="box int_mobile">
 								<input type="tel" id="mobile" name="PhoneNum" class="int" maxlength="16"
-								 placeholder="전화번호 입력" value="[[${PhoneNum}]]">
+								 placeholder="전화번호 입력" th:value="*{PhoneNum}">
 							</span>
 							<span class="error_next_box"></span>
 						</div>
@@ -117,7 +120,7 @@
 							<h3 class="join_title"><label for="zipcode">우편번호</label></h3>
 								<span>
 									<input type="text" id="zipcode" class="int">
-									<input type="button" value="주소찾기" class="btn_area" onClick="openDaumPostcode()">				
+									<input type="button" value="주소찾기" class="btn_area" onClick='openDaumPostcode()'>				
 								</span>
 						</div>
 						
@@ -125,14 +128,14 @@
 						<div>
 							<h3 class="join_title"><label for="addr">주소</label></h3>
 								<span>
-									<input type="text" id="addr" name="Addr" class="int" value="[[${Addr}]]">
+									<input type="text" id="addr" name="Addr" class="int" th:value="*{Addr}">
 								</span>
 						</div>
 						<!-- ADDRESS2 -->
 						<div>
 							<h3 class="join_title"><label for="addr2">상세주소</label></h3>
 								<span>
-									<input type="text" id="addr2" name="FulAddr" class="int" value="[[${FulAddr}]]">
+									<input type="text" id="addr2" name="FulAddr" class="int" th:value="*{FulAddr}">
 								</span>
 						</div>
 						<span class="error_next_box"></span>
@@ -143,9 +146,10 @@
 								<span>수정하기</span>
 							</button>
 						</div>
+							<script type="text/javascript" th:src="@{/script/Edit.js}"></script>
 					</div>
 				</div>
-				<script th:src="@{/script/main.js}"></script>
+			
 			</div>
 			</form>
 		</div>
