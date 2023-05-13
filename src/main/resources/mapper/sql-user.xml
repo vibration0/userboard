@@ -37,6 +37,7 @@
 	 EmailAddr=#{EmailAddr},Addr=#{Addr},FulAddr=#{FulAddr},UpdatedAt=NOW()
 	WHERE UserId=#{UserId}
 	</update>
+
 	
 	
 	

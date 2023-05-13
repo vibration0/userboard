@@ -11,10 +11,11 @@ public interface UserMapper {
 	
 	public UserDto selectNick(String NickName) throws Exception;
 	
-	public void insertUser(UserDto users) throws Exception;
+	public void insertUser(UserDto user) throws Exception;
 
-	public void updateUser(UserDto users) throws Exception;
+	public void updateUser(UserDto user) throws Exception;
 	
 	public UserDto loginUser(Map map) throws Exception;
+	
 	
 }

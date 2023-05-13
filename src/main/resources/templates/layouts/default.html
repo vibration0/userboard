@@ -12,14 +12,14 @@
     	<div class="header">
         <nav class="login-menu">
         	<div class="menu-top">
-        	<th:block th:if="${session.id == null}">
+        	<th:block th:if="${session.UserId == null}">
 		        <a th:href="@{/loginForm.do}">Log in</a>
 		        <a th:href="@{/userinsert.do}">sign up</a>
 		      </th:block>
-		      <th:block th:if="${session.id != null}">
-		      	<div th:text="${session.id}"></div>
+		      <th:block th:if="${session.UserId != null}">
+		      	<div th:text="${session.UserId}"></div>
 		      	<a th:href="@{/logOut.do}">LogOut</a>
-		      	<a th:href="@{/updateUserForm.do(UserId=${session.id})}">내정보수정</a>
+		      	<a th:href="@{/updateUserForm.do(UserId=${session.UserId})}">내정보수정</a>
 		      </th:block>
 	        </div>
         </nav>
@@ -31,9 +31,6 @@
 					</div>
 				</nav>
       </div>
-      <form method="post">
-      	<input type="hidden" th:value="${UserId}">
-      </form>
     </header>
     <main>
     <div layout:fragment="content">

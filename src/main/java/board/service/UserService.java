@@ -12,10 +12,10 @@ public interface UserService {
 	public UserDto selectNick(String NickName) throws Exception;
 	
 	//회원가입
-	public void insertUser(UserDto users) throws Exception;
+	public void insertUser(UserDto user) throws Exception;
 	
 	//회원정보 DB수정
-	public void updateUser(UserDto users) throws Exception;
+	public void updateUser(UserDto user) throws Exception;
 	
 	//로그인
 	public UserDto loginUser(Map map) throws Exception;

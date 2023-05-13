@@ -30,7 +30,7 @@ public class UserController {
 	//메인 화면
 	@RequestMapping("/")
 	public String home(Model model) {
-		model.addAttribute("title","zip");
+		model.addAttribute("title","main");
 		model.addAttribute("message","welcom to the home page!");
 		return "home";
 	}
@@ -102,10 +102,8 @@ public class UserController {
 		HashMap<String,String> map=new HashMap<String,String>();
 		map.put("UserId", UserId);
 		map.put("PassWord", PassWord);
-		System.out.println(map);
 		
 		UserDto user=userservice.loginUser(map);
-		System.out.println(user);
 		
 		if(user == null) {
 			model.addAttribute("msg","존재하지 않는 ID입니다.");
@@ -124,7 +122,7 @@ public class UserController {
 		
 		HttpSession loginSession=request.getSession();
 		
-		loginSession.setAttribute("id", user.getUserId());
+		loginSession.setAttribute("UserId", user.getUserId());
 		/* model.addAttribute("id", user.getUserId()); */
 		  
 		return "redirect:/";
@@ -139,7 +137,7 @@ public class UserController {
 	
 	//회원가입 수정폼
 	@RequestMapping(value="updateUserForm.do")
-	public String updateUser(@RequestParam("UserId")String UserId, Model model,HttpServletRequest request) throws Exception {
+	public String updateUser(@RequestParam("UserId")String UserId, Model model) throws Exception {
 		
 		UserDto user=userservice.selectUser(UserId);
 		
@@ -149,14 +147,36 @@ public class UserController {
 	}
 	
 	@RequestMapping(value="updateUserPro.do", method=RequestMethod.POST)
-	public String updatePro(UserDto user, HttpServletRequest reqeust) throws Exception {
+	public String updatePro(UserDto user) throws Exception {
 		
 		userservice.updateUser(user);
 		return "redirect:/";
 	}
-	//비밀번호 수정 창
-	@RequestMapping("editPassWordform.do")
+	//비밀번호 확인 창
+	@RequestMapping("checkPassWordform.do")
 	public String PassWordform() {
-		return "";
+		
+		return "users/checkPassWord";
+	}
+	
+	@RequestMapping(value="checkPassWordPro.do", method=RequestMethod.POST)
+	public String editPassWordPro(@RequestParam("UserId")String UserId,Model model,HttpServletRequest request) throws Exception {
+		UserDto user = userservice.selectUser(UserId);
+		String PassWord = request.getParameter("PassWord");
+		
+		HashMap<String, String> map = new HashMap<String,String>();
+		map.put("UserId", UserId);
+		
+		user=userservice.loginUser(map);
+		
+		BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+		String encodedPassWord = user.getPassWord();
+		boolean matchPw=passwordEncoder.matches(PassWord, encodedPassWord);
+		
+		if(!matchPw) {
+			model.addAttribute("msg","비밀번호가 일치하지 않습니다.");
+			return "users/checkPassWord";
+			}
+		return "users/editPassWord";
 	}
 }

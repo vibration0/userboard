@@ -20,9 +20,9 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public void insertUser(UserDto users) throws Exception {
+	public void insertUser(UserDto user) throws Exception {
 		
-		usermapper.insertUser(users);
+		usermapper.insertUser(user);
 	}
 
 	public UserDto selectNick(String NickName) throws Exception {
@@ -30,17 +30,16 @@ public class UserServiceImpl implements UserService {
 		return usermapper.selectNick(NickName);
 	}
 
-	public void updateUser(UserDto users) throws Exception {
+	public void updateUser(UserDto user) throws Exception {
 		
-		usermapper.updateUser(users);
+		usermapper.updateUser(user);
 	}
-
 	
 	public UserDto loginUser(Map map) throws Exception {
 		
 		return usermapper.loginUser(map);
 	}
-	
+
 	
 
 }
