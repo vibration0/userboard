@@ -37,7 +37,7 @@ public class UserController {
 	//회원가입 창
 	@RequestMapping("userinsert.do")	
 	public String userinsert(Model model) {
-		return "/users/userinsert";
+		return "users/userinsert";
 	}
 	
 	//id중복체크
@@ -164,11 +164,7 @@ public class UserController {
 		UserDto user = userservice.selectUser(UserId);
 		String PassWord = request.getParameter("PassWord");
 		
-		HashMap<String, String> map = new HashMap<String,String>();
-		map.put("UserId", UserId);
-		
-		user=userservice.loginUser(map);
-		
+		//비밀번호 암호화 시켜 비교
 		BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 		String encodedPassWord = user.getPassWord();
 		boolean matchPw=passwordEncoder.matches(PassWord, encodedPassWord);
