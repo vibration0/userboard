@@ -22,6 +22,7 @@ function comparePw(){
 		error[1].innerHTML ="비밀번호가 일치하지 않습니다";
 		error[1].style.color = "red";
 		pw2.value = "";
+		pw1.value = "";
 		return false;
 	}
 	

@@ -123,7 +123,7 @@ public class UserController {
 		HttpSession loginSession=request.getSession();
 		
 		loginSession.setAttribute("UserId", user.getUserId());
-		/* model.addAttribute("id", user.getUserId()); */
+		/* model.addAttribute("UserId", user.getUserId());*/
 		  
 		return "redirect:/";
 	}
@@ -154,13 +154,13 @@ public class UserController {
 	}
 	//비밀번호 확인 창
 	@RequestMapping("checkPassWordform.do")
-	public String PassWordform() {
+	public String checkPassWordform() {
 		
 		return "users/checkPassWord";
 	}
 	
 	@RequestMapping(value="checkPassWordPro.do", method=RequestMethod.POST)
-	public String editPassWordPro(@RequestParam("UserId")String UserId,Model model,HttpServletRequest request) throws Exception {
+	public String checkPassWordPro(@RequestParam("UserId")String UserId,Model model,HttpServletRequest request) throws Exception {
 		UserDto user = userservice.selectUser(UserId);
 		String PassWord = request.getParameter("PassWord");
 		
@@ -175,4 +175,25 @@ public class UserController {
 			}
 		return "users/editPassWord";
 	}
+	
+	@RequestMapping(value="editPassWordPro.do",method=RequestMethod.POST)
+	public String editPassWordPro(@RequestParam("UserId")String UserId, HttpServletRequest request,Model model,HttpSession session) throws Exception {
+		
+		UserDto user=userservice.selectUser(UserId);
+		String PassWord = request.getParameter("PassWord");
+		
+		//비밀번호 암호화
+		BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+		String encodedPassword = passwordEncoder.encode(PassWord);
+		user.setPassWord(encodedPassword);
+		
+		userservice.editPassWord(user);
+		
+		HttpSession loginSession=request.getSession();
+
+		loginSession.setAttribute("UserId", user.getUserId());
+		
+		return "redirect:/";
+	}
+	
 }

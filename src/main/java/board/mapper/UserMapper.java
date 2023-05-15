@@ -17,5 +17,5 @@ public interface UserMapper {
 	
 	public UserDto loginUser(Map map) throws Exception;
 	
-	
+	public void editPassWord(UserDto user) throws Exception;
 }

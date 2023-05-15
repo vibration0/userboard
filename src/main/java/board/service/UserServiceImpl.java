@@ -40,6 +40,12 @@ public class UserServiceImpl implements UserService {
 		return usermapper.loginUser(map);
 	}
 
+	@Override
+	public void editPassWord(UserDto user) throws Exception {
+		
+		usermapper.editPassWord(user);
+	}
+
 	
 
 }

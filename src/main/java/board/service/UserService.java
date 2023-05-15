@@ -20,6 +20,9 @@ public interface UserService {
 	//로그인
 	public UserDto loginUser(Map map) throws Exception;
 	
+	//비밀번호 DB수정
+	public void editPassWord(UserDto user) throws Exception;
+	
 	
 	
 	

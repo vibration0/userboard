@@ -38,7 +38,11 @@
 	WHERE UserId=#{UserId}
 	</update>
 
-	
+	<update id="editPassWord" parameterType="board.dto.UserDto">
+	UPDATE users
+	SET PassWord=#{PassWord}
+	WHERE UserId=#{UserId}
+	</update>
 	
 	
 </mapper>
