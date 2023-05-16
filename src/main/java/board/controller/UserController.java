@@ -120,9 +120,9 @@ public class UserController {
 		}
 		
 		
-		HttpSession loginSession=request.getSession();
+		HttpSession session=request.getSession();
 		
-		loginSession.setAttribute("UserId", user.getUserId());
+		session.setAttribute("UserId", user.getUserId());
 		/* model.addAttribute("UserId", user.getUserId());*/
 		  
 		return "redirect:/";
@@ -181,6 +181,7 @@ public class UserController {
 			}
 		return "users/editPassWord";
 	}
+	
 	//비밀번호 DB수정
 	@RequestMapping(value="editPassWordPro.do",method=RequestMethod.POST)
 	public String editPassWordPro(HttpServletRequest request,Model model,HttpSession session) throws Exception {
@@ -196,11 +197,13 @@ public class UserController {
 		
 		userservice.editPassWord(user);
 		
-		HttpSession loginSession=request.getSession();
+		session=request.getSession();
 
-		loginSession.setAttribute("UserId", user.getUserId());
+		session.setAttribute("UserId", user.getUserId());
 		
 		return "redirect:/";
 	}
+	
+	
 	
 }
