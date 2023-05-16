@@ -19,7 +19,7 @@
 		      <th:block th:if="${session.UserId != null}">
 		      	<div th:text="${session.UserId}"></div>
 		      	<a th:href="@{/logOut.do}">LogOut</a>
-		      	<a th:href="@{/updateUserForm.do(UserId=${session.UserId})}">내정보수정</a>
+		      	<a th:href="@{/updateUserForm.do}">내정보수정</a>
 		      </th:block>
 	        </div>
         </nav>

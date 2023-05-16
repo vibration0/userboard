@@ -109,13 +109,13 @@ public class UserController {
 			model.addAttribute("msg","존재하지 않는 ID입니다.");
 			return "users/loginUser";
 		} else {
-		BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-		String encodedPassWord = user.getPassWord();
-		boolean matchPw=passwordEncoder.matches(PassWord, encodedPassWord);
+			BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+			String encodedPassWord = user.getPassWord();
+			boolean matchPw=passwordEncoder.matches(PassWord, encodedPassWord);
 		
-		if(!matchPw) {
-			model.addAttribute("msg","비밀번호가 일치하지 않습니다.");
-			return "users/loginUser";
+			if(!matchPw) {
+				model.addAttribute("msg","비밀번호가 일치하지 않습니다.");
+				return "users/loginUser";
 			}
 		}
 		
@@ -136,9 +136,10 @@ public class UserController {
 	}
 	
 	//회원가입 수정폼
-	@RequestMapping(value="updateUserForm.do")
-	public String updateUser(@RequestParam("UserId")String UserId, Model model) throws Exception {
+	@RequestMapping("updateUserForm.do")
+	public String updateUser(Model model, HttpSession session) throws Exception {
 		
+		String UserId = (String)session.getAttribute("UserId");
 		UserDto user=userservice.selectUser(UserId);
 		
 		model.addAttribute("user",user);
@@ -154,13 +155,18 @@ public class UserController {
 	}
 	//비밀번호 확인 창
 	@RequestMapping("checkPassWordform.do")
-	public String checkPassWordform() {
+	public String checkPassWordform(HttpSession session) {
+		
+		String UserId = (String)session.getAttribute("UserId");
 		
 		return "users/checkPassWord";
 	}
 	
+	//비밀번호 DB 확인
 	@RequestMapping(value="checkPassWordPro.do", method=RequestMethod.POST)
-	public String checkPassWordPro(@RequestParam("UserId")String UserId,Model model,HttpServletRequest request) throws Exception {
+	public String checkPassWordPro(Model model,HttpServletRequest request,HttpSession session) throws Exception {
+		
+		String UserId = (String)session.getAttribute("UserId");
 		UserDto user = userservice.selectUser(UserId);
 		String PassWord = request.getParameter("PassWord");
 		
@@ -175,10 +181,11 @@ public class UserController {
 			}
 		return "users/editPassWord";
 	}
-	
+	//비밀번호 DB수정
 	@RequestMapping(value="editPassWordPro.do",method=RequestMethod.POST)
-	public String editPassWordPro(@RequestParam("UserId")String UserId, HttpServletRequest request,Model model,HttpSession session) throws Exception {
+	public String editPassWordPro(HttpServletRequest request,Model model,HttpSession session) throws Exception {
 		
+		String UserId = (String)session.getAttribute("UserId");
 		UserDto user=userservice.selectUser(UserId);
 		String PassWord = request.getParameter("PassWord");
 		
