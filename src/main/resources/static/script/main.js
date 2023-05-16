@@ -36,7 +36,7 @@ var idPattern = /[a-zA-Z0-9_-]{5,20}/;
 
 var pwPattern =/[a-zA-Z0-9~!@#$%^&*()_+|<>:{}]{8,16}/;
 
-var namePattern = /[a-zA-Z가-힣]/;
+var namePattern = /^[a-zA-Z가-힣]{1,5}$/;
 
 var nickPattern = /[a-zA-Z0-9가-힣]/;
 

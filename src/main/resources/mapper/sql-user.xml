@@ -40,7 +40,7 @@
 
 	<update id="editPassWord" parameterType="board.dto.UserDto">
 	UPDATE users
-	SET PassWord=#{PassWord}
+	SET PassWord=#{PassWord}, UpdatedAt=NOW()
 	WHERE UserId=#{UserId}
 	</update>
 	
