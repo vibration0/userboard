@@ -1,6 +1,3 @@
-# 이전 table를 지우고
-drop table if exists users;
-
 # 초기 스키마 정의
 create table users(
 UserId varchar(20) primary key not null,
