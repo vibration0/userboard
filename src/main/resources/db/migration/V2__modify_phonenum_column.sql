@@ -1,0 +1,1 @@
+ALTER TABLE userboard.users MODIFY COLUMN PhoneNum varchar(20) NOT NULL;

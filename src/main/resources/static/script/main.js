@@ -32,21 +32,21 @@ var error = document.querySelectorAll('.error_next_box');
 var addr = document.querySelector('#addr2');
 
 /*pattern */
-var idPattern = /[a-zA-Z0-9_-]{5,20}/;
+var idPattern = /^[a-zA-Z0-9_-]{5,20}$/;
 
-var pwPattern =/[a-zA-Z0-9~!@#$%^&*()_+|<>:{}]{8,16}/;
+var pwPattern =/^[a-zA-Z0-9~!@#$%^&*()_+|<>:{}]{8,16}&/;
 
 var namePattern = /^[a-zA-Z가-힣]{1,5}$/;
 
-var nickPattern = /[a-zA-Z0-9가-힣]/;
+var nickPattern = /^[a-zA-Z0-9가-힣]{2,6}$/;
 
-var yearPattern = /[0-9]{4}/;
+var yearPattern = /^[0-9]{4}$/;
 
 var emailPattern = /[a-z0-9]{2,}@[a-z0-9]{2,}\.[a-z0-9]{2,}/;
 
 var isPhoneNum = /(([01]{2})([01679]{1}))([0-9]{3,4})([0-9]{4})/;
 
-var addrPattern = /[0-9가-힣]/;
+var addrPattern = /^[0-9가-힣]$/;
 /*이벤트 핸들러 연결 */
 
 id.addEventListener("focusout", checkId);
