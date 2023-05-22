@@ -31,6 +31,11 @@ var error = document.querySelectorAll('.error_next_box');
 
 var addr = document.querySelector('#addr2');
 
+/*중복체크*/
+var isIdChecked = false;
+
+var isNickChecked = false;
+
 /*pattern */
 var idPattern = /^[a-zA-Z0-9_-]{5,20}$/;
 
@@ -282,9 +287,17 @@ function isBirthCompleted() {
 			return false;
 		}
 		
+		if(!isIdChecked){
+			alert('ID중복체크를 눌러주세요');
+			return false;
+		}
+		
+		if(!isNickChecked){
+			alert('닉네임중복체크를 눌러주세요');
+			return false;
+		}
+		return true;
 	}
-
-
 
 
 

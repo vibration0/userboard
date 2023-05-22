@@ -37,6 +37,7 @@
 					if(data.check==1){
 						error[0].innerHTML = "사용가능한 ID";
 						$('#pwsd1').focus();
+						isIdChecked = true;
 					} else if(data.check==-1){
 						error[0].innerHTML = "사용중인 ID"
 						error[0].style.color ="red";
@@ -66,6 +67,7 @@
 					error[4].innerHTML = "사용가능한 닉네임";	
 					error[4].style.display ="block";
 					$('#yy').focus();
+					isNickChecked = true;
 				} else if(data.nickcheck== -1){
 					error[4].innerHTML = "사용중인 닉네임";
 					error[4].style.display = "block";
@@ -97,7 +99,7 @@
 						<span class="box int_id">
 							<input type="text" id="id" name="UserId" class="int" maxlength="20">
 							<span class="step_url">@vibration.com</span>
-							<input type="button" value="중복체크" onClick="IdCheck()">
+							<input type="button" id="checkbtn" value="중복체크" onClick="IdCheck()">
 						</span>
 						<span class="error_next_box"></span>
 					</div>
@@ -138,7 +140,7 @@
 						<span class="box int_nickname">
 							<input type="text" id="nick" name="NickName" class="int" maxlength="20">
 						</span>
-						<input type="button" value="중복체크" onclick="checkNickName()">
+						<input type="button" id="checkbtn" value="중복체크" onclick="checkNickName()">
 						<span class="error_next_box"></span>
 					</div>
 					
@@ -222,10 +224,10 @@
 							<input type="text" id="addr2" name="FulAddr" class="int"> 
 						</span>
 				</div>
-				<span class="error_next_box"></span>
+				<span class="error_next_box"></span>	
 				<!-- SUBMIT -->
 				<div class="btn_area">
-					<button type="submit" id="btnjoin" onClick="return submitCheck()">
+					<button type="submit" id="submitbtn"  onClick="return submitCheck()">
 						<span>가입하기</span>
 					</button>
 				</div>
