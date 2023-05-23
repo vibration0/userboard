@@ -34,6 +34,10 @@ var isPhoneNum = /(([01]{2})([01679]{1}))([0-9]{3,4})([0-9]{4})/;
 
 var addrPattern = /[0-9가-힣]/;
 
+/* 중복체크 */
+
+var isNickChecked = false;
+
 /*이벤트 핸들러*/
 userName.addEventListener("focusout", checkName);
 nickName.addEventListener("focusout", checkNick);
@@ -136,4 +140,9 @@ function isEmailCorrect() {
 			return false;
 		}
 		
+		if(!isNickChecked){
+			alert('닉네임 중복체크를 눌러주세요');
+			return false;
+		}
+		return true;
 	}

@@ -288,12 +288,12 @@ function isBirthCompleted() {
 		}
 		
 		if(!isIdChecked){
-			alert('ID중복체크를 눌러주세요');
+			alert('ID 중복체크를 눌러주세요');
 			return false;
 		}
 		
 		if(!isNickChecked){
-			alert('닉네임중복체크를 눌러주세요');
+			alert('닉네임 중복체크를 눌러주세요');
 			return false;
 		}
 		return true;
